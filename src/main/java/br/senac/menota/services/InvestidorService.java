@@ -21,6 +21,10 @@ public class InvestidorService {
         return investidorRepository.save(request);
     }
 
+    public Investidor byId(Long id){
+        return investidorRepository.findById(id).orElseThrow(()-> new RuntimeException("Investidor não encontrado"));
+    }
+
     public List<Investidor> getAllInvestors(){
         return investidorRepository.findAll();
     }
