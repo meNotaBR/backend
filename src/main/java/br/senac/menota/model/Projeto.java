@@ -1,6 +1,7 @@
 package br.senac.menota.model;
 
 import br.senac.menota.enums.Status;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,5 +33,7 @@ public class Projeto extends EntityID{
     private Startup startup;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "projeto")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    //read only pq não vamos criar entregáveis ao cadastrar um projeto, será criado em outra tela/modal
     private List<Entregavel> entregaveis;
 }
