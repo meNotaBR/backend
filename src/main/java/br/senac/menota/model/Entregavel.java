@@ -1,6 +1,7 @@
 package br.senac.menota.model;
 
 import br.senac.menota.enums.Status;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,5 +29,7 @@ public class Entregavel extends EntityID{
 
     @ManyToOne
     @JoinColumn(name = "project_id", referencedColumnName = "id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    //write only pq não precisamos retornar o projeto vinculado no get list todas as vezes
     private Projeto projeto;
 }
