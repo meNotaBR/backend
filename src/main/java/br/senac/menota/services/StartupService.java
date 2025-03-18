@@ -1,5 +1,6 @@
 package br.senac.menota.services;
 
+import br.senac.menota.exceptions.NotFoundException;
 import br.senac.menota.model.Startup;
 import br.senac.menota.repositories.StartupRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,5 +22,11 @@ public class StartupService {
 
     public List<Startup> getAllStartups(){
         return startupRepository.findAll();
+    }
+
+    public void existsById(Long id){
+        if (!startupRepository.existsById(id)){
+            throw new NotFoundException("Startup não cadastrada!");
+        }
     }
 }
