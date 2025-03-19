@@ -37,21 +37,4 @@ public class Projeto extends EntityID{
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     //read only pq não vamos criar entregáveis ao cadastrar um projeto, será criado em outra tela/modal
     private List<Entregavel> entregaveis;
-
-    public LocalDate getDataPrevistaInicio() {
-
-        if (dataPrevistaInicio == null){
-            throw new ValidationException("Data prevista de Início não pode estar em branco");
-        }
-
-        return dataPrevistaInicio;
-    }
-
-    public LocalDate getDataPrevistaEntrega() {
-
-        if (dataPrevistaEntrega == null){
-            throw new ValidationException("Data prevista de Entrega não pode estar em branco");
-        }
-        return dataPrevistaEntrega;
-    }
 }
