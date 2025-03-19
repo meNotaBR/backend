@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 
 @Component
-public class ValidateDataPrevista implements NewProjetoValidationStrategy {
+public class ValidateDataPrevistaProjeto implements NewProjetoValidationStrategy {
     @Override
     public void validate(Projeto projeto) {
 
