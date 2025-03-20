@@ -1,0 +1,21 @@
+package br.senac.menota.resources;
+
+import br.senac.menota.model.Upvote;
+import br.senac.menota.services.UpvoteService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/upvote")
+@RequiredArgsConstructor
+public class UpvoteController {
+
+    private final UpvoteService upvoteService;
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Upvote create(@RequestBody Upvote upvote){
+        return upvoteService.create(upvote);
+    }
+}
