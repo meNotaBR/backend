@@ -13,7 +13,7 @@ public class UpvoteController {
 
     private final UpvoteService upvoteService;
 
-    @PostMapping
+    @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public Upvote create(@RequestBody Upvote upvote){
         return upvoteService.create(upvote);
