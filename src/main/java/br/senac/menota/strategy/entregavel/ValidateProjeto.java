@@ -1,4 +1,4 @@
-package br.senac.menota.strategy.entregavel.entregavel;
+package br.senac.menota.strategy.entregavel;
 
 import br.senac.menota.exceptions.ValidationException;
 import br.senac.menota.model.Entregavel;
