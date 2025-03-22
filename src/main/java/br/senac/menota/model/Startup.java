@@ -1,6 +1,9 @@
 package br.senac.menota.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import lombok.*;
 
@@ -20,6 +23,11 @@ public class Startup extends EntityID{
     private String cnpj;
     private LocalDateTime dataCadastro;
     private LocalDate dataCriacao;
+
+    @OneToOne
+    @JoinColumn(name = "empresario_id", referencedColumnName = "id")
+    @JsonBackReference
+    private Empresario empresario;
 
     @PrePersist
     public void onCreate(){
