@@ -1,6 +1,7 @@
 package br.senac.menota.model;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -24,6 +25,7 @@ public class Upvote extends EntityID{
 
     @ManyToOne
     @JoinColumn(name = "projeto_id", referencedColumnName = "id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Projeto projeto;
 
     private LocalDateTime dataCriacao;
