@@ -20,7 +20,7 @@ public class ValidateEmail implements NewEmpresarioValidationStrategy {
             throw new ValidationException("Por favor, informe seu email!");
         }
 
-        if (empresarioRepository.findByEmail(empresario.getEmail()).isPresent()){
+        if (empresarioRepository.findByEmail(empresario.getEmail()) != null){
             throw new ValidationException("Email já cadastrado!");
         }
     }
