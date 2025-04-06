@@ -1,5 +1,6 @@
 package br.senac.menota.services;
 
+import br.senac.menota.dtos.EmpresarioCreateResponseDTO;
 import br.senac.menota.model.Empresario;
 import br.senac.menota.repositories.EmpresarioRepository;
 import br.senac.menota.strategy.NewEmpresarioValidationStrategy;
@@ -18,13 +19,13 @@ public class EmpresarioService {
     private final EmpresarioRepository empresarioRepository;
     private final List<NewEmpresarioValidationStrategy> newEmpresarioValidationStrategies;
 
-    public Empresario create(Empresario empresario){
+    public EmpresarioCreateResponseDTO create(Empresario empresario){
 
         newEmpresarioValidationStrategies.forEach(validation -> validation.validate(empresario));
 
         empresario.setSenha(new BCryptPasswordEncoder().encode(empresario.getSenha()));
 
-        return empresarioRepository.save(empresario);
+        return EmpresarioCreateResponseDTO.fromEntity(empresarioRepository.save(empresario));
     }
 
     public List<Empresario> getAll(){

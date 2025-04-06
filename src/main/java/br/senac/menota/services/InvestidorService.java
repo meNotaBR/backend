@@ -1,5 +1,6 @@
 package br.senac.menota.services;
 
+import br.senac.menota.dtos.InvestidorCreateResponseDTO;
 import br.senac.menota.model.Investidor;
 import br.senac.menota.repositories.InvestidorRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,11 +17,11 @@ public class InvestidorService {
 
     private final InvestidorRepository investidorRepository;
 
-    public Investidor create(Investidor request){
+    public InvestidorCreateResponseDTO create(Investidor request){
 
         request.setSenha(new BCryptPasswordEncoder().encode(request.getSenha()));
 
-        return investidorRepository.save(request);
+        return InvestidorCreateResponseDTO.fromEntity(investidorRepository.save(request));
     }
 
     public Investidor byId(Long id){

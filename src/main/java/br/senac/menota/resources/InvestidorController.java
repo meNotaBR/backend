@@ -1,5 +1,6 @@
 package br.senac.menota.resources;
 
+import br.senac.menota.dtos.InvestidorCreateResponseDTO;
 import br.senac.menota.model.Investidor;
 import br.senac.menota.services.InvestidorService;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ public class InvestidorController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public Investidor create(@RequestBody Investidor request){
+    public InvestidorCreateResponseDTO create(@RequestBody Investidor request){
         return investidorService.create(request);
     }
 
