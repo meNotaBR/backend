@@ -1,5 +1,6 @@
 package br.senac.menota.services;
 
+import br.senac.menota.exceptions.NotFoundException;
 import br.senac.menota.model.Projeto;
 import br.senac.menota.repositories.ProjetoRepository;
 import br.senac.menota.strategy.NewProjetoValidationStrategy;
@@ -24,5 +25,9 @@ public class ProjetoService {
 
     public List<Projeto> getAll(){
         return projetoRepository.findAll();
+    }
+
+    public Projeto getById(Long id){
+        return projetoRepository.findById(id).orElseThrow(() -> new NotFoundException("Projeto não encontrado"));
     }
 }

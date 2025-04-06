@@ -23,7 +23,19 @@ public class ProjetoController {
 
     @GetMapping("/list")
     @ResponseStatus(HttpStatus.OK)
-    public List<Projeto> getAll(){
+    public List<Projeto> getAll() throws InterruptedException {
+
+        Thread.sleep(3000);//mock de tempo de resposta
+
         return projetoService.getAll();
+    }
+
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Projeto getById(@PathVariable("id") Long id) throws InterruptedException {
+
+        Thread.sleep(3000);//mock de tempo de resposta
+
+        return projetoService.getById(id);
     }
 }
