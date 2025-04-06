@@ -13,12 +13,11 @@ import java.time.LocalDate;
 @Builder
 @ToString
 @Entity(name = "tb_empresario")
-public class Empresario extends EntityID{
+public class Empresario extends BaseUser{
 
     private String nome;
     private String sobrenome;
     private String cpf;
-    private String email;
     private String numeroCelular;
     private LocalDate dataCadastro;
 

@@ -1,28 +1,29 @@
 package br.senac.menota.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.PrePersist;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @ToString
 @Entity(name = "tb_investidor")
-public class Investidor extends EntityID{
+public class Investidor extends BaseUser{
 
     private String nome;
     private String sobrenome;
     private String cpf;
-    private String cnpj;
-    private LocalDateTime dataCadastro;
+    private LocalDate dataCadastro;
     private LocalDate dataNasc;
 
 
-    public Investidor(){
-        this.dataCadastro = LocalDateTime.now();
+    @PrePersist
+    protected void onCreate(){
+        this.dataCadastro = LocalDate.now();
     }
 }
