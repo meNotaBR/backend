@@ -20,6 +20,7 @@ public class Empresario extends BaseUser{
     private String cpf;
     private String numeroCelular;
     private LocalDate dataCadastro;
+    private LocalDate dataNasc;
 
     @OneToOne(mappedBy = "empresario", fetch = FetchType.EAGER)
     @JsonManagedReference
