@@ -2,22 +2,24 @@ package br.senac.menota.services;
 
 import br.senac.menota.model.Investidor;
 import br.senac.menota.repositories.InvestidorRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class InvestidorService {
 
     private final InvestidorRepository investidorRepository;
 
-    public InvestidorService(InvestidorRepository investidorRepository) {
-        this.investidorRepository = investidorRepository;
-    }
-
     public Investidor create(Investidor request){
+
+        request.setSenha(new BCryptPasswordEncoder().encode(request.getSenha()));
+
         return investidorRepository.save(request);
     }
 

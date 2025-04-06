@@ -5,6 +5,7 @@ import br.senac.menota.repositories.EmpresarioRepository;
 import br.senac.menota.strategy.NewEmpresarioValidationStrategy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +21,8 @@ public class EmpresarioService {
     public Empresario create(Empresario empresario){
 
         newEmpresarioValidationStrategies.forEach(validation -> validation.validate(empresario));
+
+        empresario.setSenha(new BCryptPasswordEncoder().encode(empresario.getSenha()));
 
         return empresarioRepository.save(empresario);
     }
