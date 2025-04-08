@@ -3,6 +3,7 @@ package br.senac.menota.services;
 import br.senac.menota.exceptions.ValidationException;
 import br.senac.menota.model.Upvote;
 import br.senac.menota.repositories.UpvoteRepository;
+import br.senac.menota.utils.AuthenticationUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ public class UpvoteService {
 
     public Upvote create(Upvote upvote){
 
-        if (upvoteRepository.existsByInvestidorIdAndProjetoId(upvote.getInvestidor().getId(), upvote.getProjeto().getId())){
+        if (upvoteRepository.existsByInvestidorIdAndProjetoId(AuthenticationUtil.retriveAuthenticatedUser().getId(), upvote.getProjeto().getId())){
             throw new ValidationException("ja laikado");
         }
 
