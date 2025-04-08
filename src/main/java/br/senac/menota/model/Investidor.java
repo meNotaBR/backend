@@ -25,5 +25,6 @@ public class Investidor extends BaseUser{
     @PrePersist
     protected void onCreate(){
         this.dataCadastro = LocalDate.now();
+        this.setUserType("INVESTIDOR");
     }
 }

@@ -29,5 +29,6 @@ public class Empresario extends BaseUser{
     @PrePersist
     protected void onCreate(){
         this.dataCadastro = LocalDate.now();
+        this.setUserType("EMPRESARIO");
     }
 }
