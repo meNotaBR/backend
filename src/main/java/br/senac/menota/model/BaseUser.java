@@ -18,6 +18,7 @@ public class BaseUser extends EntityID implements UserDetails{
 
     private String email;
     private String senha;
+    private String userType;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
