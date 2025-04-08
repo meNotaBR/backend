@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public record UserLoginResponseDTO(
         String token,
-        LocalDateTime expiresAt
+        LocalDateTime expiresAt,
+        String accountType
 ){
 }
