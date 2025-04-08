@@ -1,5 +1,6 @@
 package br.senac.menota.resources;
 
+import br.senac.menota.dtos.ProjetoFeedResponseDTO;
 import br.senac.menota.model.Projeto;
 import br.senac.menota.services.ProjetoService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class ProjetoController {
 
     @GetMapping("/list")
     @ResponseStatus(HttpStatus.OK)
-    public List<Projeto> getAll() throws InterruptedException {
+    public List<ProjetoFeedResponseDTO> getAll() throws InterruptedException {
 
         Thread.sleep(3000);//mock de tempo de resposta
 
