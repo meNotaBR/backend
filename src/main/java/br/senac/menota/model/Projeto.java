@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -22,6 +23,8 @@ public class Projeto extends EntityID{
     private LocalDate dataInicio;
     private LocalDate dataPrevistaEntrega;
     private LocalDate dataEntrega;
+    private LocalDateTime dataCadastro;
+    private Boolean isPelando;
 
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -40,4 +43,13 @@ public class Projeto extends EntityID{
 
     @OneToMany(mappedBy = "projeto")
     private List<Upvote> upvote;
+
+    @OneToOne(mappedBy = "projeto")
+    private UpvoteCount upvoteCount;
+
+    @PrePersist
+    protected void onCreate(){
+        this.dataCadastro = LocalDateTime.now();
+        this.isPelando = false;
+    }
 }
