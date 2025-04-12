@@ -5,5 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UpvoteRepository extends JpaRepository<Upvote, Long> {
 
-    boolean existsByInvestidorIdAndProjetoId(Long investidorId, Long projetoId);
+    Upvote findByUserIdAndProjetoId(String userId, Long projetoId);
+    boolean existsByUserIdAndProjetoId(String userId, Long projetoId);
 }
