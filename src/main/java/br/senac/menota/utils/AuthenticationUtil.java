@@ -14,4 +14,8 @@ public class AuthenticationUtil {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return (BaseUser) authentication.getPrincipal();
     }
+
+    public static boolean isLoggedIn(){
+        return SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
+    }
 }
