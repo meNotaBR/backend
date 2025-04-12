@@ -24,7 +24,7 @@ public class InvestidorService {
         return InvestidorCreateResponseDTO.fromEntity(investidorRepository.save(request));
     }
 
-    public Investidor byId(Long id){
+    public Investidor byId(String id){
         return investidorRepository.findById(id).orElseThrow(()-> new RuntimeException("Investidor não encontrado"));
     }
 
