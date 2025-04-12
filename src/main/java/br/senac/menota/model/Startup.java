@@ -22,7 +22,6 @@ public class Startup extends EntityID{
     private String nomeFantasia;
     private String cnpj;
     private LocalDateTime dataCadastro;
-    private LocalDate dataCriacao;
 
     @OneToOne
     @JoinColumn(name = "empresario_id", referencedColumnName = "id")
