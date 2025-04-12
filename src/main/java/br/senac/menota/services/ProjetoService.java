@@ -48,18 +48,16 @@ public class ProjetoService {
     public List<ProjetoFeedResponseDTO> getAll(){
         var projetos =  projetoRepository.findAll();
 
-        var user = AuthenticationUtil.retriveAuthenticatedUser();
-
-        if (Objects.equals(user.getUserType(), "EMPRESARIO")){
+        if (AuthenticationUtil.isLoggedIn()){
             return projetos.stream()
                     .map(projeto -> ProjetoFeedResponseDTO.fromEntity
-                            (projeto, false))
+                            (projeto, upvoteRepository.existsByUserIdAndProjetoId(AuthenticationUtil.retriveAuthenticatedUser().getId(), projeto.getId())))
                     .toList();
         }
 
         return projetos.stream()
                 .map(projeto -> ProjetoFeedResponseDTO.fromEntity
-                        (projeto, upvoteRepository.existsByInvestidorIdAndProjetoId(user.getId(), projeto.getId())))
+                        (projeto, false))
                 .toList();
     }
 
