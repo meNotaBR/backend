@@ -18,4 +18,10 @@ public class UpvoteController {
     public Upvote create(@RequestBody Upvote upvote){
         return upvoteService.create(upvote);
     }
+
+    @DeleteMapping("/delete")
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@RequestBody Upvote upvote){
+        upvoteService.deleteUpvote(upvote);
+    }
 }
