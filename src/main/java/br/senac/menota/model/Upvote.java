@@ -19,9 +19,7 @@ import java.time.LocalDateTime;
 @Entity(name = "tb_upvote")
 public class Upvote extends EntityID{
 
-    @ManyToOne
-    @JoinColumn(name = "investidor_id", referencedColumnName = "id")
-    private Investidor investidor;
+    private String userId;
 
     @ManyToOne
     @JoinColumn(name = "projeto_id", referencedColumnName = "id")
