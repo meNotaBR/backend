@@ -1,7 +1,7 @@
 package br.senac.menota.resources;
 
+import br.senac.menota.dtos.EmpresarioCreateRequestDTO;
 import br.senac.menota.dtos.EmpresarioCreateResponseDTO;
-import br.senac.menota.model.Empresario;
 import br.senac.menota.services.EmpresarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,7 @@ public class EmpresarioController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public EmpresarioCreateResponseDTO create(@RequestBody Empresario empresario){
+    public EmpresarioCreateResponseDTO create(@RequestBody EmpresarioCreateRequestDTO empresario){
         return empresarioService.create(empresario);
     }
 }
