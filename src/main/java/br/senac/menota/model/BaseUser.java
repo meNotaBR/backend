@@ -1,5 +1,8 @@
 package br.senac.menota.model;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,7 +17,11 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 @MappedSuperclass
-public class BaseUser extends EntityID implements UserDetails{
+public class BaseUser implements UserDetails{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
 
     private String email;
     private String senha;
