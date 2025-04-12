@@ -18,6 +18,7 @@ public class Investidor extends BaseUser{
     private String nome;
     private String sobrenome;
     private String cpf;
+    private String numeroCelular;
     private LocalDate dataCadastro;
     private LocalDate dataNasc;
 
