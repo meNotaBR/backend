@@ -15,7 +15,7 @@ public class UpvoteService {
     private final UpvoteRepository upvoteRepository;
     private final UpvoteCountRepository upvoteCountRepository;
 
-    public Upvote create(Upvote upvote){
+    public void create(Upvote upvote){
 
         if (upvoteRepository.existsByUserIdAndProjetoId(AuthenticationUtil.retriveAuthenticatedUser().getId(), upvote.getProjeto().getId())){
             throw new ValidationException("ja laikado");
@@ -29,7 +29,7 @@ public class UpvoteService {
 
         upvoteCountRepository.save(count);
 
-        return upvoteRepository.save(upvote);
+        upvoteRepository.save(upvote);
     }
 
     public void deleteUpvote(Upvote upvote){

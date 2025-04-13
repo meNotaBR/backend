@@ -15,8 +15,8 @@ public class UpvoteController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public Upvote create(@RequestBody Upvote upvote){
-        return upvoteService.create(upvote);
+    public void create(@RequestBody Upvote upvote){
+        upvoteService.create(upvote);
     }
 
     @DeleteMapping("/delete")
