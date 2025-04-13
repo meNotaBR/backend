@@ -26,9 +26,18 @@ public class ProjetoController {
     @ResponseStatus(HttpStatus.OK)
     public List<ProjetoFeedResponseDTO> getAll() throws InterruptedException {
 
-        Thread.sleep(3000);//mock de tempo de resposta
+        Thread.sleep(3000);
 
         return projetoService.getAll();
+    }
+
+    @GetMapping("/recentes")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProjetoFeedResponseDTO> getUltimosProjetos() throws InterruptedException {
+
+        Thread.sleep(3000);
+
+        return projetoService.getUltimosProjetos();
     }
 
     @GetMapping("/{id}")
