@@ -8,13 +8,14 @@ import br.senac.menota.repositories.EmpresarioRepository;
 import br.senac.menota.repositories.ProjetoRepository;
 import br.senac.menota.repositories.UpvoteCountRepository;
 import br.senac.menota.repositories.UpvoteRepository;
+import br.senac.menota.repositories.specifications.ProjetoSpecification;
 import br.senac.menota.strategy.NewProjetoValidationStrategy;
 import br.senac.menota.utils.AuthenticationUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -46,18 +47,22 @@ public class ProjetoService {
     }
 
     public List<ProjetoFeedResponseDTO> getAll(){
-        var projetos =  projetoRepository.findAll();
-
-        if (AuthenticationUtil.isLoggedIn()){
-            return projetos.stream()
-                    .map(projeto -> ProjetoFeedResponseDTO.fromEntity
-                            (projeto, upvoteRepository.existsByUserIdAndProjetoId(AuthenticationUtil.retriveAuthenticatedUser().getId(), projeto.getId())))
-                    .toList();
-        }
+        var projetos = projetoRepository.findAll();
 
         return projetos.stream()
                 .map(projeto -> ProjetoFeedResponseDTO.fromEntity
-                        (projeto, false))
+                        (projeto, upvoteRepository.existsByUserIdAndProjetoId(AuthenticationUtil.retriveAuthenticatedUser().getId(), projeto.getId())))
+                .toList();
+    }
+
+    public List<ProjetoFeedResponseDTO> getUltimosProjetos(){
+        var spec = Specification.where(ProjetoSpecification.getUltimosProjetos());
+
+        var projetos = projetoRepository.findAll(spec);
+
+        return projetos.stream()
+                .map(projeto -> ProjetoFeedResponseDTO.fromEntity
+                        (projeto, upvoteRepository.existsByUserIdAndProjetoId(AuthenticationUtil.retriveAuthenticatedUser().getId(), projeto.getId())))
                 .toList();
     }
 
