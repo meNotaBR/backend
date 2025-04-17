@@ -48,4 +48,10 @@ public class ProjetoController {
 
         return projetoService.getById(id);
     }
+
+    @GetMapping("/user")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProjetoFeedResponseDTO> getProjetosUsuarios(){
+        return projetoService.getProjetosUsuario();
+    }
 }
