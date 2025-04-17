@@ -9,4 +9,5 @@ public interface StartupRepository extends JpaRepository<Startup, Long> {
 
     Optional<Startup> findByCnpj(String cnpj);
     Optional<Startup> findByNomeFantasia(String nomeFantasia);
+    Startup findByEmpresarioId(String empresarioId);
 }
