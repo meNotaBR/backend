@@ -4,10 +4,7 @@ import br.senac.menota.dtos.ProjetoFeedResponseDTO;
 import br.senac.menota.exceptions.NotFoundException;
 import br.senac.menota.model.Projeto;
 import br.senac.menota.model.UpvoteCount;
-import br.senac.menota.repositories.EmpresarioRepository;
-import br.senac.menota.repositories.ProjetoRepository;
-import br.senac.menota.repositories.UpvoteCountRepository;
-import br.senac.menota.repositories.UpvoteRepository;
+import br.senac.menota.repositories.*;
 import br.senac.menota.repositories.specifications.ProjetoSpecification;
 import br.senac.menota.strategy.NewProjetoValidationStrategy;
 import br.senac.menota.utils.AuthenticationUtil;
@@ -26,6 +23,7 @@ public class ProjetoService {
     private final EmpresarioRepository empresarioRepository;
     private final UpvoteCountRepository upvoteCountRepository;
     private final UpvoteRepository upvoteRepository;
+    private final StartupRepository startupRepository;
 
     public Projeto create(Projeto projeto){
 
@@ -61,6 +59,17 @@ public class ProjetoService {
         var projetos = projetoRepository.findAll(spec);
 
         return projetos.stream()
+                .map(projeto -> ProjetoFeedResponseDTO.fromEntity
+                        (projeto, upvoteRepository.existsByUserIdAndProjetoId(AuthenticationUtil.retriveAuthenticatedUser().getId(), projeto.getId())))
+                .toList();
+    }
+
+    public List<ProjetoFeedResponseDTO> getProjetosUsuario(){
+
+        var startupId = startupRepository.findByEmpresarioId(AuthenticationUtil.retriveAuthenticatedUser().getId());
+
+        return projetoRepository.findAllByStartupId(startupId.getId())
+                .stream()
                 .map(projeto -> ProjetoFeedResponseDTO.fromEntity
                         (projeto, upvoteRepository.existsByUserIdAndProjetoId(AuthenticationUtil.retriveAuthenticatedUser().getId(), projeto.getId())))
                 .toList();
