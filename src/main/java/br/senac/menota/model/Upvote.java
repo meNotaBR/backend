@@ -8,7 +8,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -26,10 +26,10 @@ public class Upvote extends EntityID{
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Projeto projeto;
 
-    private LocalDateTime dataCriacao;
+    private LocalDate dataCriacao;
 
     @PrePersist
     private void onCreate(){
-        this.dataCriacao = LocalDateTime.now();
+        this.dataCriacao = LocalDate.now();
     }
 }
