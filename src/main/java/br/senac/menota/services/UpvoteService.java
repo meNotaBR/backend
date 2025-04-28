@@ -1,5 +1,6 @@
 package br.senac.menota.services;
 
+import br.senac.menota.dtos.UpvoteGroupedByDate;
 import br.senac.menota.exceptions.ValidationException;
 import br.senac.menota.model.Upvote;
 import br.senac.menota.repositories.UpvoteCountRepository;
@@ -7,6 +8,8 @@ import br.senac.menota.repositories.UpvoteRepository;
 import br.senac.menota.utils.AuthenticationUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -44,5 +47,9 @@ public class UpvoteService {
 
         upvoteCountRepository.save(count);
 
+    }
+
+    public List<UpvoteGroupedByDate> findAllByProjetoId(Long id){
+        return upvoteRepository.findAllDescByProjetoId(id);
     }
 }
