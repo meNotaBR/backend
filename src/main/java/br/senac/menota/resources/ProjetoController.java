@@ -54,4 +54,10 @@ public class ProjetoController {
     public List<ProjetoFeedResponseDTO> getProjetosUsuarios(){
         return projetoService.getProjetosUsuario();
     }
+
+    @GetMapping("/curtidos")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProjetoFeedResponseDTO> getProjetosCurtidos(){
+        return projetoService.getProjetosCurtidos();
+    }
 }

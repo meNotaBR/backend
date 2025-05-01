@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -73,6 +74,18 @@ public class ProjetoService {
                 .map(projeto -> ProjetoFeedResponseDTO.fromEntity
                         (projeto, upvoteRepository.existsByUserIdAndProjetoId(AuthenticationUtil.retriveAuthenticatedUser().getId(), projeto.getId())))
                 .toList();
+    }
+
+    public List<ProjetoFeedResponseDTO> getProjetosCurtidos(){
+        var upvotes = upvoteRepository.findAllByUserId(AuthenticationUtil.retriveAuthenticatedUser().getId());
+
+        List<ProjetoFeedResponseDTO> response = new ArrayList<>();
+
+        upvotes.forEach(upvote -> {
+            response.add(ProjetoFeedResponseDTO.fromEntity(projetoRepository.findByUpvoteId(upvote.getId()), true));
+        });
+
+        return response;
     }
 
     public Projeto getById(Long id){
