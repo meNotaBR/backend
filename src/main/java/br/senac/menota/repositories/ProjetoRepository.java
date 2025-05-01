@@ -9,4 +9,5 @@ import java.util.List;
 public interface ProjetoRepository extends JpaRepository<Projeto, Long>, JpaSpecificationExecutor<Projeto> {
 
     List<Projeto> findAllByStartupId(Long startupId);
+    Projeto findByUpvoteId(Long id);
 }
