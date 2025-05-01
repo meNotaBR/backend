@@ -18,4 +18,6 @@ public interface UpvoteRepository extends JpaRepository<Upvote, Long>, JpaSpecif
             "FROM tb_upvote u WHERE u.projeto.id = :projetoId " +
             "GROUP BY u.dataCriacao ORDER BY u.dataCriacao DESC")
     List<UpvoteGroupedByDate> findAllDescByProjetoId(@Param("projetoId") Long projetoId);
+
+    List<Upvote> findAllByUserId(String userId);
 }
