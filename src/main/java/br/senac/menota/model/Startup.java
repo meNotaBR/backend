@@ -1,13 +1,9 @@
 package br.senac.menota.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.PrePersist;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -23,9 +19,13 @@ public class Startup extends EntityID{
     private String cnpj;
     private LocalDateTime dataCadastro;
 
+    @Lob
+    @Column(columnDefinition = "TEXT")
+    private String profileImage;
+
     @OneToOne
     @JoinColumn(name = "empresario_id", referencedColumnName = "id")
-    @JsonBackReference
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Empresario empresario;
 
     @PrePersist
