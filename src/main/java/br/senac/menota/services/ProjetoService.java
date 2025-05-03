@@ -11,6 +11,7 @@ import br.senac.menota.utils.AuthenticationUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,11 +32,13 @@ public class ProjetoService {
         var empresario = empresarioRepository.findById(AuthenticationUtil.retriveAuthenticatedUser().getId())
                 .orElseThrow(() -> new NotFoundException("Empresário não encontrado"));
 
-        if (empresario.getStartup() == null){
+        var startup = startupRepository.findByEmpresarioId(empresario.getId());
+
+        if (startup == null){
             throw new NotFoundException("Você ainda não tem nenhuma startup cadastrada");
         }
 
-        projeto.setStartup(empresario.getStartup());
+        projeto.setStartup(startup);
 
         newProjetoValidationStrategies.forEach(validation -> validation.validate(projeto));
 
@@ -65,6 +68,7 @@ public class ProjetoService {
                 .toList();
     }
 
+    @Transactional
     public List<ProjetoFeedResponseDTO> getProjetosUsuario(){
 
         var startupId = startupRepository.findByEmpresarioId(AuthenticationUtil.retriveAuthenticatedUser().getId());
