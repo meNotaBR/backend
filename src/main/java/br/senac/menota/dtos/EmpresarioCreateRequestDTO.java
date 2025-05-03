@@ -1,6 +1,7 @@
 package br.senac.menota.dtos;
 
 import br.senac.menota.model.Empresario;
+import br.senac.menota.model.Localizacao;
 import br.senac.menota.model.Startup;
 import lombok.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,6 +24,8 @@ public class EmpresarioCreateRequestDTO {
     private LocalDate dataNasc;
     private String nomeFantasia;
     private String cnpj;
+    private String cidade;
+    private String estado;
     private String profileImage;
 
     public static Empresario fromEntity(EmpresarioCreateRequestDTO requestDTO){
@@ -44,7 +47,10 @@ public class EmpresarioCreateRequestDTO {
         return Startup.builder()
                 .nomeFantasia(requestDTO.getNomeFantasia())
                 .cnpj(requestDTO.getCnpj())
-                .profileImage(requestDTO.getProfileImage())
+                .localizacao(Localizacao.builder()
+                        .cidade(requestDTO.getCidade())
+                        .estado(requestDTO.getEstado())
+                        .build())
                 .build();
     }
 }
