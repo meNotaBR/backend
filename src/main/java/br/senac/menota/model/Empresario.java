@@ -1,6 +1,5 @@
 package br.senac.menota.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,10 +20,6 @@ public class Empresario extends BaseUser{
     private String numeroCelular;
     private LocalDate dataCadastro;
     private LocalDate dataNasc;
-
-    @OneToOne(mappedBy = "empresario", fetch = FetchType.EAGER)
-    @JsonManagedReference
-    private Startup startup;
 
     @PrePersist
     protected void onCreate(){
