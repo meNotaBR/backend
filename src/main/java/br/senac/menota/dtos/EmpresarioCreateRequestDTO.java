@@ -23,6 +23,7 @@ public class EmpresarioCreateRequestDTO {
     private LocalDate dataNasc;
     private String nomeFantasia;
     private String cnpj;
+    private String profileImage;
 
     public static Empresario fromEntity(EmpresarioCreateRequestDTO requestDTO){
         var empresario =  Empresario.builder()
@@ -43,6 +44,7 @@ public class EmpresarioCreateRequestDTO {
         return Startup.builder()
                 .nomeFantasia(requestDTO.getNomeFantasia())
                 .cnpj(requestDTO.getCnpj())
+                .profileImage(requestDTO.getProfileImage())
                 .build();
     }
 }
