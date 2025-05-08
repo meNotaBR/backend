@@ -19,6 +19,9 @@ public class Startup extends EntityID{
     private String cnpj;
     private LocalDateTime dataCadastro;
 
+    @Embedded
+    private Localizacao localizacao;
+
     @Lob
     @Column(columnDefinition = "TEXT")
     private String profileImage;
