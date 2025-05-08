@@ -1,6 +1,7 @@
 package br.senac.menota.resources;
 
 import br.senac.menota.dtos.ProjetoFeedResponseDTO;
+import br.senac.menota.model.DashboardView;
 import br.senac.menota.model.Projeto;
 import br.senac.menota.services.ProjetoService;
 import lombok.RequiredArgsConstructor;
@@ -59,5 +60,11 @@ public class ProjetoController {
     @ResponseStatus(HttpStatus.OK)
     public List<ProjetoFeedResponseDTO> getProjetosCurtidos(){
         return projetoService.getProjetosCurtidos();
+    }
+
+    @GetMapping("/view/{projectId}")
+    @ResponseStatus(HttpStatus.OK)
+    public DashboardView getView(@PathVariable("projectId")Long id){
+        return projetoService.getView(id);
     }
 }
