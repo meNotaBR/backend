@@ -2,7 +2,6 @@ package br.senac.menota.services;
 
 import br.senac.menota.dtos.ProjetoFeedResponseDTO;
 import br.senac.menota.exceptions.NotFoundException;
-import br.senac.menota.model.DashboardView;
 import br.senac.menota.model.Projeto;
 import br.senac.menota.model.UpvoteCount;
 import br.senac.menota.repositories.*;
@@ -27,7 +26,6 @@ public class ProjetoService {
     private final UpvoteCountRepository upvoteCountRepository;
     private final UpvoteRepository upvoteRepository;
     private final StartupRepository startupRepository;
-    private final DashboardViewRepository dashboardViewRepository;
 
     @Transactional
     public Projeto create(Projeto projeto){
@@ -97,9 +95,5 @@ public class ProjetoService {
 
     public Projeto getById(Long id){
         return projetoRepository.findById(id).orElseThrow(() -> new NotFoundException("Projeto não encontrado"));
-    }
-
-    public DashboardView getView(Long id){
-        return dashboardViewRepository.dashboardViewByProjectId(id);
     }
 }

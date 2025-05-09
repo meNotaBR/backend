@@ -61,10 +61,4 @@ public class ProjetoController {
     public List<ProjetoFeedResponseDTO> getProjetosCurtidos(){
         return projetoService.getProjetosCurtidos();
     }
-
-    @GetMapping("/view/{projectId}")
-    @ResponseStatus(HttpStatus.OK)
-    public DashboardView getView(@PathVariable("projectId")Long id){
-        return projetoService.getView(id);
-    }
 }
