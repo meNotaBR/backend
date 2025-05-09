@@ -1,11 +1,11 @@
 package br.senac.menota.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import br.senac.menota.dtos.UpvoteGroupedByDate;
+import jakarta.persistence.*;
 import lombok.Getter;
 import org.hibernate.annotations.Immutable;
+
+import java.util.List;
 
 @Entity
 @Immutable
@@ -55,4 +55,15 @@ public class DashboardView {
 
     @Column(name = "entregaveis_este_mes")
     private Long entregaveisEsteMes;
+
+    @Transient
+    private List<UpvoteGroupedByDate> upvotes;
+
+    public List<UpvoteGroupedByDate> getUpvotes() {
+        return upvotes;
+    }
+
+    public void setUpvotes(List<UpvoteGroupedByDate> upvotes) {
+        this.upvotes = upvotes;
+    }
 }
