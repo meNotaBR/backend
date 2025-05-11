@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -21,6 +22,7 @@ public class Entregavel extends EntityID{
     private LocalDate dataInicio;
     private LocalDate dataPrevistaEntrega;
     private LocalDate dataEntrega;
+    private LocalDateTime dataCriacao;
 
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -32,4 +34,9 @@ public class Entregavel extends EntityID{
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     //write only pq não precisamos retornar o projeto vinculado no get list todas as vezes
     private Projeto projeto;
+
+    @PrePersist
+    public void onCreate(){
+        this.dataCriacao = LocalDateTime.now();
+    }
 }
