@@ -3,6 +3,7 @@ package br.senac.menota.model;
 import br.senac.menota.dtos.UpvoteGroupedByDate;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Immutable;
 
 import java.util.List;
@@ -16,6 +17,18 @@ public class DashboardView {
     @Id
     @Column(name = "project_id")
     private Long id;
+
+    @Column(name = "projeto_nome")
+    private String nome;
+
+    @Column(name = "projeto_descricao")
+    private String descricao;
+
+    @Column(name = "data_inicio")
+    private String dataInicio;
+
+    @Column(name = "data_entrega")
+    private String dataEntrega;
 
     @Column(name = "total_entregaveis")
     private Long totalEntregaveis;
@@ -32,12 +45,6 @@ public class DashboardView {
     @Column(name = "indice_desempenho_prazo")
     private Double indiceDesempenhoPrazo;
 
-    @Column(name = "tempo_medio_entrega")
-    private Double tempoMedioEntrega;
-
-    @Column(name = "desvio_padrao_tempo_entrega")
-    private Double desvioPadraoTempoEntrega;
-
     @Column(name = "taxa_conclusao_entregaveis")
     private Double taxaConclusaoEntregaveis;
 
@@ -47,23 +54,14 @@ public class DashboardView {
     @Column(name = "upvote_count")
     private Long totalUpvotes;
 
-    @Column(name = "upvotes_ultimo_mes")
-    private Long upvotesUltimoMes;
-
     @Column(name = "taxa_crescimento_upvotes")
     private Double taxaCrescimentoUpvotes;
 
-    @Column(name = "entregaveis_este_mes")
-    private Long entregaveisEsteMes;
-
     @Transient
+    @Setter
     private List<UpvoteGroupedByDate> upvotes;
 
-    public List<UpvoteGroupedByDate> getUpvotes() {
-        return upvotes;
-    }
-
-    public void setUpvotes(List<UpvoteGroupedByDate> upvotes) {
-        this.upvotes = upvotes;
-    }
+    @Transient
+    @Setter
+    private List<Entregavel> entregaveis;
 }
