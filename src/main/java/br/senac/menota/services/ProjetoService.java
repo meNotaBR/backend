@@ -96,4 +96,9 @@ public class ProjetoService {
     public Projeto getById(Long id){
         return projetoRepository.findById(id).orElseThrow(() -> new NotFoundException("Projeto não encontrado"));
     }
+
+    public void delete(Long id){
+        var projeto = projetoRepository.findById(id).orElseThrow(() -> new NotFoundException("Projeto não encontrado"));
+        projetoRepository.delete(projeto);
+    }
 }

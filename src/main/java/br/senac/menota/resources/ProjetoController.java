@@ -61,4 +61,10 @@ public class ProjetoController {
     public List<ProjetoFeedResponseDTO> getProjetosCurtidos(){
         return projetoService.getProjetosCurtidos();
     }
+
+    @DeleteMapping("/delete/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable("id") Long id) {
+        projetoService.delete(id);
+    }
 }

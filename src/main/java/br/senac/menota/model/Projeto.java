@@ -36,15 +36,15 @@ public class Projeto extends EntityID{
     @JoinColumn(name = "startup_id", referencedColumnName = "id")
     private Startup startup;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "projeto")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "projeto", cascade = CascadeType.REMOVE)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     //read only pq não vamos criar entregáveis ao cadastrar um projeto, será criado em outra tela/modal
     private List<Entregavel> entregaveis;
 
-    @OneToMany(mappedBy = "projeto")
+    @OneToMany(mappedBy = "projeto", cascade = CascadeType.REMOVE)
     private List<Upvote> upvote;
 
-    @OneToOne(mappedBy = "projeto")
+    @OneToOne(mappedBy = "projeto", cascade = CascadeType.REMOVE)
     private UpvoteCount upvoteCount;
 
     @PrePersist
