@@ -49,6 +49,30 @@ public class ProjetoService {
         return proj;
     }
 
+    @Transactional
+    public Projeto update(Long id, Projeto projeto){
+
+        var projetoDB = projetoRepository.findById(id).orElseThrow(() -> new NotFoundException("Projeto não encontrado"));
+
+        if (projeto.getNome() != null){
+            projetoDB.setNome(projeto.getNome());
+        }
+
+        if (projeto.getDescricao() != null){
+            projetoDB.setDescricao(projeto.getDescricao());
+        }
+
+        if (projeto.getDataPrevistaInicio() != null){
+            projetoDB.setDataPrevistaInicio(projeto.getDataPrevistaInicio());
+        }
+
+        if (projeto.getDataPrevistaEntrega() != null){
+            projetoDB.setDataPrevistaEntrega(projeto.getDataPrevistaEntrega());
+        }
+
+        return projetoRepository.save(projetoDB);
+    }
+
     public List<ProjetoFeedResponseDTO> getAll(){
         var projetos = projetoRepository.findAll();
 
