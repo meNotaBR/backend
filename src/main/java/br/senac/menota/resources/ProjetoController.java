@@ -23,6 +23,12 @@ public class ProjetoController {
         return projetoService.create(projeto);
     }
 
+    @PatchMapping("/update/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Projeto update(@PathVariable("id") Long id, @RequestBody Projeto projeto){
+        return projetoService.update(id, projeto);
+    }
+
     @GetMapping("/list")
     @ResponseStatus(HttpStatus.OK)
     public List<ProjetoFeedResponseDTO> getAll() throws InterruptedException {
@@ -60,5 +66,11 @@ public class ProjetoController {
     @ResponseStatus(HttpStatus.OK)
     public List<ProjetoFeedResponseDTO> getProjetosCurtidos(){
         return projetoService.getProjetosCurtidos();
+    }
+
+    @DeleteMapping("/delete/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable("id") Long id) {
+        projetoService.delete(id);
     }
 }
