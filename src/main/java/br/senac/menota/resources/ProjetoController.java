@@ -62,6 +62,12 @@ public class ProjetoController {
         return projetoService.getProjetosUsuario();
     }
 
+    @GetMapping("/by-startup/{startupId}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProjetoFeedResponseDTO> getProjetosByStartupId(@PathVariable("startupId") Long startupId) {
+        return projetoService.getProjetosByStartupId(startupId);
+    }
+
     @GetMapping("/curtidos")
     @ResponseStatus(HttpStatus.OK)
     public List<ProjetoFeedResponseDTO> getProjetosCurtidos(){

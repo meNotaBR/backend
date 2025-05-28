@@ -36,6 +36,11 @@ public class StartupService {
         return startupRepository.findAll();
     }
 
+    public Startup getStartupById(Long id) {
+        return startupRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Startup não encontrada com o ID: " + id));
+    }
+
     public void existsById(Long id){
         if (!startupRepository.existsById(id)){
             throw new NotFoundException("Startup não cadastrada!");

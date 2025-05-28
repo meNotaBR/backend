@@ -26,4 +26,10 @@ public class StartupController {
     public List<Startup> getAllStartups(){
         return startupService.getAllStartups();
     }
+
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Startup getStartupById(@PathVariable("id") Long id) {
+        return startupService.getStartupById(id);
+    }
 }
