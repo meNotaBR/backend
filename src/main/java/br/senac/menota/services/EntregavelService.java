@@ -21,4 +21,37 @@ public class EntregavelService {
 
         return entregavelRepository.save(entregavel);
     }
+
+    public List<Entregavel> getByProjetctId(Long id){
+        try {
+            List<Entregavel> entregaveis = entregavelRepository.findAllByProjetoIdOrderByDataCriacaoAsc(id);
+            
+            if (entregaveis == null || entregaveis.isEmpty()) {
+                throw new RuntimeException("Entregável não encontrado");
+            }
+
+            return entregaveis;
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao buscar entregáveis: " + e.getMessage());
+        }
+    }
+
+    public Entregavel update(Entregavel entregavel) {
+        try {
+            if (entregavel.getId() == null) {
+                throw new RuntimeException("ID do entregável não pode ser nulo");
+            }
+            return entregavelRepository.save(entregavel);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao atualizar entregável: " + e.getMessage());
+        }
+    }
+
+    public void delete(Long id) {
+        try {
+            entregavelRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao deletar entregável: " + e.getMessage());
+        }
+    }
 }
