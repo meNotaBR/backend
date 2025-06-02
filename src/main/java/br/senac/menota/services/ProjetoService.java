@@ -105,6 +105,7 @@ public class ProjetoService {
                 .toList();
     }
 
+    @Transactional
     public List<ProjetoFeedResponseDTO> getProjetosByStartupId(Long startupId) {
         if (!startupRepository.existsById(startupId)) {
             throw new NotFoundException("Startup não encontrada com o ID: " + startupId);
