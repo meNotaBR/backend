@@ -105,6 +105,19 @@ public class ProjetoService {
                 .toList();
     }
 
+    @Transactional
+    public List<ProjetoFeedResponseDTO> getProjetosByStartupId(Long startupId) {
+        if (!startupRepository.existsById(startupId)) {
+            throw new NotFoundException("Startup não encontrada com o ID: " + startupId);
+        }
+
+        return projetoRepository.findAllByStartupId(startupId)
+                .stream()
+                .map(projeto -> ProjetoFeedResponseDTO.fromEntity
+                        (projeto, upvoteRepository.existsByUserIdAndProjetoId(AuthenticationUtil.retriveAuthenticatedUser().getId(), projeto.getId())))
+                .toList();
+    }
+
     public List<ProjetoFeedResponseDTO> getProjetosCurtidos(){
         var upvotes = upvoteRepository.findAllByUserId(AuthenticationUtil.retriveAuthenticatedUser().getId());
 
