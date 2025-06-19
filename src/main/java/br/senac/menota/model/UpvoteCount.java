@@ -18,5 +18,5 @@ public class UpvoteCount extends EntityID{
     @JoinColumn(name = "projeto_id", referencedColumnName = "id")
     private Projeto projeto;
 
-    private int count;
+    private int totalUpvotes;
 }
