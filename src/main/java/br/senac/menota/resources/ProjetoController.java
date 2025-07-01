@@ -34,35 +34,24 @@ public class ProjetoController {
     @GetMapping("/list")
     @ResponseStatus(HttpStatus.OK)
     public List<ProjetoFeedResponseDTO> getAll() throws InterruptedException {
-
-        Thread.sleep(3000);
-
         return projetoService.getAll();
     }
 
     @GetMapping("/carrossel")
     @ResponseStatus(HttpStatus.OK)
     public List<ProjetoCarrosselResponseDTO> getCarrossel() throws InterruptedException {
-        Thread.sleep(3000);
-
         return projetoService.getProjetosCarrossel();
     }
 
     @GetMapping("/recentes")
     @ResponseStatus(HttpStatus.OK)
     public List<ProjetoFeedResponseDTO> getUltimosProjetos() throws InterruptedException {
-
-        Thread.sleep(3000);
-
         return projetoService.getUltimosProjetos();
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Projeto getById(@PathVariable("id") Long id) throws InterruptedException {
-
-        Thread.sleep(3000);//mock de tempo de resposta
-
         return projetoService.getById(id);
     }
 
