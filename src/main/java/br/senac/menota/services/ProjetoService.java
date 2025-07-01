@@ -1,8 +1,11 @@
 package br.senac.menota.services;
 
+import br.senac.menota.dtos.ProjetoCarrosselResponseDTO;
+import br.senac.menota.dtos.ProjetoCreateRequestDTO;
 import br.senac.menota.dtos.ProjetoFeedResponseDTO;
 import br.senac.menota.exceptions.NotFoundException;
 import br.senac.menota.model.Projeto;
+import br.senac.menota.model.ProjetoImagemCapa;
 import br.senac.menota.model.UpvoteCount;
 import br.senac.menota.repositories.*;
 import br.senac.menota.repositories.specifications.ProjetoSpecification;
@@ -26,9 +29,10 @@ public class ProjetoService {
     private final UpvoteCountRepository upvoteCountRepository;
     private final UpvoteRepository upvoteRepository;
     private final StartupRepository startupRepository;
+    private final ProjetoImagemCapaRepository projetoImagemCapaRepository;
 
     @Transactional
-    public Projeto create(Projeto projeto){
+    public Projeto create(ProjetoCreateRequestDTO projetoDTO){
 
         var empresario = empresarioRepository.findById(AuthenticationUtil.retriveAuthenticatedUser().getId())
                 .orElseThrow(() -> new NotFoundException("Empresário não encontrado"));
@@ -39,6 +43,14 @@ public class ProjetoService {
             throw new NotFoundException("Você ainda não tem nenhuma startup cadastrada");
         }
 
+        var projeto = Projeto
+                    .builder()
+                    .nome(projetoDTO.nome())
+                    .dataPrevistaInicio(projetoDTO.dataPrevistaInicio())
+                    .dataPrevistaEntrega(projetoDTO.dataPrevistaEntrega())
+                    .descricao(projetoDTO.descricao())
+                    .build();
+
         projeto.setStartup(startup);
 
         newProjetoValidationStrategies.forEach(validation -> validation.validate(projeto));
@@ -46,28 +58,65 @@ public class ProjetoService {
         var proj =  projetoRepository.save(projeto);
         upvoteCountRepository.save(new UpvoteCount(projeto, 0));
 
+        if (!projetoDTO.imageBase64().isEmpty()){
+            projetoImagemCapaRepository.save(new ProjetoImagemCapa(projeto, projetoDTO.imageBase64()));
+        }
+
         return proj;
     }
 
     @Transactional
-    public Projeto update(Long id, Projeto projeto){
+    public List<ProjetoCarrosselResponseDTO> getProjetosCarrossel(){
+        var upvotecount = upvoteCountRepository.getProjectsByUpvoteCount();
+
+        List<ProjetoCarrosselResponseDTO> response = new ArrayList<>();
+
+        upvotecount.forEach(count -> {
+            var projeto = projetoRepository.findById(count.getProjeto().getId()).orElseThrow(() -> new NotFoundException("Projeto Não Encontrado"));
+            String base64 = projetoImagemCapaRepository.findByProjetoId(count.getProjeto().getId()).getImageBase64();
+
+            response.add(new ProjetoCarrosselResponseDTO(
+                    projeto.getId(),
+                    projeto.getNome(),
+                    base64,
+                    projeto.getDescricao(),
+                    count.getTotalUpvotes()
+            ));
+        });
+
+        return response;
+    }
+
+    @Transactional
+    public Projeto update(Long id, ProjetoCreateRequestDTO projeto){
 
         var projetoDB = projetoRepository.findById(id).orElseThrow(() -> new NotFoundException("Projeto não encontrado"));
 
-        if (projeto.getNome() != null){
-            projetoDB.setNome(projeto.getNome());
+        if (projeto.nome() != null){
+            projetoDB.setNome(projeto.nome());
         }
 
-        if (projeto.getDescricao() != null){
-            projetoDB.setDescricao(projeto.getDescricao());
+        if (projeto.descricao() != null){
+            projetoDB.setDescricao(projeto.descricao());
         }
 
-        if (projeto.getDataPrevistaInicio() != null){
-            projetoDB.setDataPrevistaInicio(projeto.getDataPrevistaInicio());
+        if (projeto.dataPrevistaInicio() != null){
+            projetoDB.setDataPrevistaInicio(projeto.dataPrevistaInicio());
         }
 
-        if (projeto.getDataPrevistaEntrega() != null){
-            projetoDB.setDataPrevistaEntrega(projeto.getDataPrevistaEntrega());
+        if (projeto.dataPrevistaEntrega() != null){
+            projetoDB.setDataPrevistaEntrega(projeto.dataPrevistaEntrega());
+        }
+
+        if (!projeto.imageBase64().isEmpty()){
+            var image = projetoImagemCapaRepository.findByProjetoId(projetoDB.getId());
+
+            if (image != null){
+                image.setImageBase64(projeto.imageBase64());
+                projetoImagemCapaRepository.save(image);
+            }else {
+                projetoImagemCapaRepository.save(new ProjetoImagemCapa(projetoDB, projeto.imageBase64()));
+            }
         }
 
         return projetoRepository.save(projetoDB);
@@ -99,6 +148,19 @@ public class ProjetoService {
         var startupId = startupRepository.findByEmpresarioId(AuthenticationUtil.retriveAuthenticatedUser().getId());
 
         return projetoRepository.findAllByStartupId(startupId.getId())
+                .stream()
+                .map(projeto -> ProjetoFeedResponseDTO.fromEntity
+                        (projeto, upvoteRepository.existsByUserIdAndProjetoId(AuthenticationUtil.retriveAuthenticatedUser().getId(), projeto.getId())))
+                .toList();
+    }
+
+    @Transactional
+    public List<ProjetoFeedResponseDTO> getProjetosByStartupId(Long startupId) {
+        if (!startupRepository.existsById(startupId)) {
+            throw new NotFoundException("Startup não encontrada com o ID: " + startupId);
+        }
+
+        return projetoRepository.findAllByStartupId(startupId)
                 .stream()
                 .map(projeto -> ProjetoFeedResponseDTO.fromEntity
                         (projeto, upvoteRepository.existsByUserIdAndProjetoId(AuthenticationUtil.retriveAuthenticatedUser().getId(), projeto.getId())))

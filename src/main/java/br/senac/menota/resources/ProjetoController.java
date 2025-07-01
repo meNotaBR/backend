@@ -1,5 +1,7 @@
 package br.senac.menota.resources;
 
+import br.senac.menota.dtos.ProjetoCarrosselResponseDTO;
+import br.senac.menota.dtos.ProjetoCreateRequestDTO;
 import br.senac.menota.dtos.ProjetoFeedResponseDTO;
 import br.senac.menota.model.DashboardView;
 import br.senac.menota.model.Projeto;
@@ -19,13 +21,13 @@ public class ProjetoController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public Projeto create(@RequestBody Projeto projeto){
+    public Projeto create(@RequestBody ProjetoCreateRequestDTO projeto){
         return projetoService.create(projeto);
     }
 
     @PatchMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Projeto update(@PathVariable("id") Long id, @RequestBody Projeto projeto){
+    public Projeto update(@PathVariable("id") Long id, @RequestBody ProjetoCreateRequestDTO projeto){
         return projetoService.update(id, projeto);
     }
 
@@ -36,6 +38,14 @@ public class ProjetoController {
         Thread.sleep(3000);
 
         return projetoService.getAll();
+    }
+
+    @GetMapping("/carrossel")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProjetoCarrosselResponseDTO> getCarrossel() throws InterruptedException {
+        Thread.sleep(3000);
+
+        return projetoService.getProjetosCarrossel();
     }
 
     @GetMapping("/recentes")
@@ -60,6 +70,12 @@ public class ProjetoController {
     @ResponseStatus(HttpStatus.OK)
     public List<ProjetoFeedResponseDTO> getProjetosUsuarios(){
         return projetoService.getProjetosUsuario();
+    }
+
+    @GetMapping("/by-startup/{startupId}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProjetoFeedResponseDTO> getProjetosByStartupId(@PathVariable("startupId") Long startupId) {
+        return projetoService.getProjetosByStartupId(startupId);
     }
 
     @GetMapping("/curtidos")

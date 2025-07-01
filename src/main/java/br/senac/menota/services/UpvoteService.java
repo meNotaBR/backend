@@ -28,7 +28,7 @@ public class UpvoteService {
 
         var count = upvoteCountRepository.findByProjetoId(upvote.getProjeto().getId());
 
-        count.setCount(count.getCount() + 1);
+        count.setTotalUpvotes(count.getTotalUpvotes() + 1);
 
         upvoteCountRepository.save(count);
 
@@ -43,7 +43,7 @@ public class UpvoteService {
 
         var count = upvoteCountRepository.findByProjetoId(upvote.getProjeto().getId());
 
-        count.setCount(count.getCount() - 1);
+        count.setTotalUpvotes(count.getTotalUpvotes() - 1);
 
         upvoteCountRepository.save(count);
 

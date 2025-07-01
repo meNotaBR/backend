@@ -32,7 +32,7 @@ public record ProjetoFeedResponseDTO(
                 projeto.getStatus(),
                 projeto.getDescricao(),
                 projeto.getStartup(),
-                projeto.getUpvoteCount().getCount(),
+                projeto.getUpvoteCount().getTotalUpvotes(),
                 isLiked
         );
     }

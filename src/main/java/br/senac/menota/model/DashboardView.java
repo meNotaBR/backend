@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Immutable
-@Table(name = "vw_advanced_project_dashboard")
+@Table(name = "vw_projetos")
 @Getter
 public class DashboardView {
 

@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW vw_advanced_project_dashboard AS
+CREATE OR REPLACE VIEW vw_projetos AS
 SELECT
     p.id AS project_id,
     p.nome AS projeto_nome,
@@ -18,7 +18,7 @@ SELECT
         2
     ) AS taxa_conclusao_entregaveis,
     COUNT(CASE WHEN e.status = 'INICIADO' THEN 1 END) AS entregaveis_em_andamento,
-    COALESCE(uc.count, 0) AS upvote_count,
+    COALESCE(uc.total_upvotes, 0) AS upvote_count,
     ROUND(
         (SELECT COUNT(*) FROM tb_upvote WHERE projeto_id = p.id AND data_criacao >= CURRENT_DATE - INTERVAL '30 days') * 100.0 / NULLIF(COALESCE(uc.count, 0), 0),
         2
@@ -30,4 +30,4 @@ LEFT JOIN
 LEFT JOIN
     tb_upvote_count uc ON uc.projeto_id = p.id
 GROUP BY
-    p.id, uc.count;
+    p.id, uc.total_upvotes;
