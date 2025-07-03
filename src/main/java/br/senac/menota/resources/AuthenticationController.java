@@ -17,8 +17,6 @@ public class AuthenticationController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UserLoginResponseDTO login(@RequestBody UserLoginRequestDTO request) throws InterruptedException {
-
-        Thread.sleep(3000);
         return loginService.login(request);
     }
 }
